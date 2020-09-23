@@ -6,6 +6,8 @@ use App\Http\Resources\QuestionResource;
 use App\Models\Question;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response as FacadesResponse;
+use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
 class QuestionController extends Controller
 {
@@ -73,7 +75,8 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
+        $question->update($request->all());
+        return response('Udate', Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -84,6 +87,7 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $question->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
