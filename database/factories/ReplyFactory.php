@@ -3,8 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Reply;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Question;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ReplyFactory extends Factory
 {
@@ -23,7 +24,13 @@ class ReplyFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'body' => $this->faker->text,
+            'question_id' => function () {
+                return Question::all()->random();
+            },
+            'user_id' => function () {
+                return \App\Models\User::all()->random();
+            },
         ];
     }
 }
