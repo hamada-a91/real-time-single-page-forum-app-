@@ -14,14 +14,14 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'api',
         'passwords' => 'users',
     ],
 
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
-    |--------------------------------------------------------------------------
+    |---------- ----------------------------------------------------------------
     |
     | Next, you may define every authentication guard for your application.
     | Of course, a great default configuration has been defined for you
@@ -41,10 +41,10 @@ return [
             'provider' => 'users',
         ],
 
+
         'api' => [
-            'driver' => 'token',
+            'driver' => 'jwt',
             'provider' => 'users',
-            'hash' => false,
         ],
     ],
 
