@@ -10,11 +10,16 @@
       <v-toolbar-title>AskTime</v-toolbar-title>
 
       <v-spacer></v-spacer>
-
-      <v-btn flat> Forum</v-btn>
-      <v-btn flat> Ask Question</v-btn>
-      <v-btn flat> Category</v-btn>
-      <v-btn flat> Login</v-btn>
+      <div>
+        <router-link to="/forum">
+          <v-btn text> Forum</v-btn>
+        </router-link>
+        <router-link to="/ask"> <v-btn text> Ask Question</v-btn> </router-link>
+        <router-link to="/category">
+          <v-btn text> Category</v-btn>
+        </router-link>
+        <router-link to="/login"> <v-btn text> Login</v-btn> </router-link>
+      </div>
     </v-toolbar>
   </div>
 </template>

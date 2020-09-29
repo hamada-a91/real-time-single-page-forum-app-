@@ -10,6 +10,11 @@ window.Vue = require('vue');
 
 import Vuetify from "../plugins/vuetify"
 
+import User from './Helpers/User'
+window.User = User
+
+console.log(User.id())
+
 
 
 /**
@@ -24,7 +29,7 @@ import Vuetify from "../plugins/vuetify"
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('AppHome', require('./components/AppHome.vue').default);
-import router from './Router/router.js'
+import router from './Router/router.js';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
