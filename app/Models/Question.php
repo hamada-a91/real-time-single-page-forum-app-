@@ -12,7 +12,16 @@ class Question extends Model
 {
     use HasFactory;
     protected $fillable = ['title', 'slug', 'body', 'category', 'category_id', 'user_id'];
-    protected $quarded = []; // ich kann ignoriere some mass assigment
+    //protected $quarded = []; // ich kann ignoriere some mass assigment
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($question) {
+            $question->slug = str_slug($question->title);
+        });
+    }
 
     public function user()
     {
@@ -29,7 +38,7 @@ class Question extends Model
     }
     public function getPathAttribute()
     {
-        return asset("api/question/$this->slug");
+        return "/question/$this->slug";
     }
     public function getRouteKeyName()
     {

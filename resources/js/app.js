@@ -10,10 +10,20 @@ window.Vue = require('vue');
 
 import Vuetify from "../plugins/vuetify"
 
+import VueSimplemde from 'vue-simplemde'
+import 'simplemde/dist/simplemde.min.css'
+
+
+Vue.component('vue-simplemde', VueSimplemde)
+
+
+import md from 'marked' // fuer html data 
+window.md = md
+
 import User from './Helpers/User'
 window.User = User
 
-console.log(User.id())
+window.EventBus = new Vue();
 
 
 
