@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-card>
       <v-form @submit.prevent="update">
         <v-text-field

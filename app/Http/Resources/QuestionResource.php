@@ -19,10 +19,20 @@ class QuestionResource extends JsonResource
             'path' => $this->path,
             'body' => $this->body,
             'created_at' => $this->created_at->diffForHumans(),
+            'replies' => ReplyResource::collection($this->replies),
+            'reply_count' => $this->replies->count(),
             'user' => $this->user->name,
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'slug' => $this->slug
+            'slug' => $this->slug,
+            'askdate' => $this->askdate,
+            'asktime' => $this->asktime,
+            'agreed' => $this->agrees->where('user_id', auth()->id())->count(),
+            'disagreed' => $this->disagrees->where('user_id', auth()->id())->count(),
+
+
+
+
 
 
         ];

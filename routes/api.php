@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\QuestionController;
+use App\Models\Models\agree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Illuminate\Notifications\HasDatabaseNotifications;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +38,17 @@ Route::apiResource("/question/{question}/reply", "App\Http\Controllers\ReplyCont
 
 Route::Post("/like/{reply}", "App\Http\Controllers\LikeController@likeit");
 Route::delete("/like/{reply}", "App\Http\Controllers\LikeController@unlikeit");
+
+Route::Post("/agree/{question}", "App\Http\Controllers\AgreeController@agree");
+Route::delete("/agree/{question}", "App\Http\Controllers\AgreeController@unagree");
+Route::get("/question/{question}/agree", "App\Http\Controllers\AgreeController@index");
+
+
+Route::Post("/disagree/{question}", "App\Http\Controllers\DisagreeController@disagree");
+Route::delete("/disagree/{question}", "App\Http\Controllers\DisagreeController@undisagree");
+Route::get("/question/{question}/disagree", "App\Http\Controllers\DisagreeController@index");
+
+//Notificationsrout
+
+Route::Post('notifications', "App\Http\Controllers\NotificationController@index");
+Route::Post('markAsRead', "App\Http\Controllers\NotificationController@markAsRead");

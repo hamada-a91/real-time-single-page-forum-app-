@@ -16,9 +16,66 @@
         label="Category"
         autocomplete
       ></v-select>
-
-      <vue-simplemde v-model="form.body"></vue-simplemde>
-
+      <div>
+        <h4>Discribe</h4>
+        <vue-simplemde v-model="form.body"></vue-simplemde>
+      </div>
+      <v-row>
+        <v-menu
+          transition="scale-transition"
+          offset-y
+          max-width="290px"
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              :value="form.askdate"
+              slot="activator"
+              label="Due date"
+              prepend-icon="date_range"
+              v-on="on"
+              v-bind="attrs"
+            ></v-text-field>
+          </template>
+          <v-date-picker v-model="form.askdate"></v-date-picker>
+        </v-menu>
+        <v-menu
+          ref="menu"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          :return-value.sync="form.asktime"
+          transition="scale-transition"
+          offset-y
+          max-width="290px"
+          min-width="290px"
+        >
+          <v-spacer></v-spacer>
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="form.asktime"
+              label="Picker in menu"
+              prepend-icon="mdi-clock"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-time-picker
+            v-model="form.time"
+            full-width
+            @click:minute="$refs.menu.save(form.time)"
+          ></v-time-picker>
+        </v-menu>
+      </v-row>
+      <div class="ui right icon input large">
+        <v-text-field
+          prepend-icon="mdi-map-marker"
+          type="text"
+          placeholder="Enter the address"
+          v-model="form.location"
+          id="autocomplete"
+        />
+      </div>
       <v-btn color="green" type="submit">Create</v-btn>
     </v-form>
   </v-container>
@@ -32,19 +89,37 @@ export default {
         title: null,
         category_id: null,
         body: null,
+        asktime: null,
+        askdate: null,
+        location: null,
       },
+
       categories: {},
       errors: {},
     };
+  },
+  mounted() {
+    new google.maps.places.Autocomplete(
+      document.getElementById("autocomplete"),
+      {
+        bounds: new google.maps.LatLngBounds(
+          new google.maps.LatLng(51.3, 12.0)
+        ),
+      }
+    );
   },
   created() {
     axios.get("/api/category").then((res) => (this.categories = res.data.data));
   },
   methods: {
     create() {
+      console.log(this.form);
       axios
         .post("/api/question", this.form)
-        .then((res) => this.$router.push(res.data.path))
+        .then((res) => {
+          this.$router.push(res.data.path);
+          console.log(res);
+        })
         .catch((error) => (this.errors = error.response.data.error));
     },
   },
@@ -52,4 +127,8 @@ export default {
 </script>
 
 <style>
+h4 {
+  color: purple;
+}
+@import "~simplemde/dist/simplemde.min.css";
 </style>

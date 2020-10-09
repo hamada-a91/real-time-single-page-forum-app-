@@ -13,6 +13,11 @@ import Vuetify from "../plugins/vuetify"
 import VueSimplemde from 'vue-simplemde'
 import 'simplemde/dist/simplemde.min.css'
 
+import VueSimpleAlert from "vue-simple-alert";
+
+Vue.use(VueSimpleAlert);
+
+
 
 Vue.component('vue-simplemde', VueSimplemde)
 

@@ -2,17 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Agree;
 use App\Models\Reply;
 use App\Models\Category;
+use App\Models\Disagree;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Question extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'slug', 'body', 'category', 'category_id', 'user_id'];
+    protected $fillable = ['title', 'slug', 'body', 'askdate', 'asktime', 'location', 'category', 'category_id', 'user_id'];
     //protected $quarded = []; // ich kann ignoriere some mass assigment
+
+    protected $with = ['replies'];  // für retrieve relationship
+
+
 
     protected static function boot()
     {
@@ -30,7 +36,15 @@ class Question extends Model
 
     public function replies()
     {
-        return $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class)->latest();
+    }
+    public function agrees()
+    {
+        return $this->hasMany(Agree::class);
+    }
+    public function disagrees()
+    {
+        return $this->hasMany(Disagree::class);
     }
     public function category()
     {
