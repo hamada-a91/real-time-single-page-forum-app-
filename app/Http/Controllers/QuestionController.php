@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuestionRequest;
 use App\Http\Resources\QuestionResource;
 use App\Models\Question;
 use Illuminate\Http\Response;
@@ -43,7 +44,7 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {
         // $request['slug'] = str_slug($request->title); 
         // ich habe boot() in User-Model stattdessen benutzt

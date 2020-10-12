@@ -10,9 +10,7 @@
         <span class="grey--text"> {{ data.created_at }}</span>
       </div>
       <v-spacer></v-spacer>
-      <v-btn class="mb-14" text color="pink"
-        >{{ data.reply_count }} Reply</v-btn
-      >
+      <v-btn class="mb-14" text color="pink">{{ replyCount }} Reply</v-btn>
     </v-card-title>
     <v-card-text aria-setsize="15">
       <v-textarea
@@ -74,11 +72,11 @@
       <v-row class="mx-auto my-auto justify-center">
         <v-chip class="ma-2" color="success" outlined>
           <v-icon left> thumb_up </v-icon>
-          {{ agrees.length }} Agrees
+          {{ lengtha }} Agrees
         </v-chip>
         <v-chip class="ma-2" color="error" outlined>
           <v-icon left> thumb_down </v-icon>
-          {{ disagrees.length }} Disagrees
+          {{ lengthd }} Disagrees
         </v-chip>
       </v-row>
     </div>
@@ -117,17 +115,36 @@ export default {
       disagreed: this.data.disagreed,
       agrees: null, //array for agrees component
       disagrees: null, //array for disagrees component
+      replyCount: this.data.reply_count,
+      lengtha: null,
+      lengthd: null,
     };
   },
   created() {
     this.getAgree();
     this.getDisagree();
+    EventBus.$on("newReply", () => {
+      this.replyCount++;
+    });
+    EventBus.$on("deleteReply", () => {
+      this.replyCount--;
+    });
   },
   props: ["data"],
   computed: {
     body() {
       return md.parse(this.data.body);
     },
+    /* lengtha() {
+      if (this.agrees.length !== 0) {
+        return this.agrees.length;
+      }
+    },
+    lengthd() {
+      if (this.disagrees.length != 0 && this.disagrees < 1) {
+        //return this.disagrees.length;
+      }
+    },*/
     disable() {
       return this.agreed ? true : false;
     },
@@ -149,6 +166,7 @@ export default {
     getAgree() {
       axios.get(`/api/question/${this.data.slug}/agree`).then((res) => {
         this.agrees = res.data.data;
+        this.lengtha = res.data.data.length;
         console.log(this.agrees);
       });
     },
@@ -157,6 +175,8 @@ export default {
         .get(`/api/question/${this.data.slug}/disagree`)
         .then((res) => {
           this.disagrees = res.data.data;
+          this.lengthd = res.data.data.length;
+
           console.log(res);
         })
         .catch((error) => console.log(error.response.data));
@@ -171,6 +191,7 @@ export default {
             this.agrees.unshift(res.data.agree);
             var indexid = this.disagrees.find((agree) => agree.user_id == "1");
             this.disagrees.splice(indexid, 1);
+            this.lengtha++;
 
             this.deleteDisAgree();
             this.agreed = !this.agreed;
@@ -190,6 +211,8 @@ export default {
             this.disagrees.unshift(res.data.disagree);
             var indexid = this.agrees.find((agree) => agree.user_id == "1");
             this.agrees.splice(indexid, 1);
+            this.lengthd++;
+
             this.deleteAgree();
             this.disagreed = !this.disagreed;
             this.agreed = !this.agreed;
@@ -202,6 +225,7 @@ export default {
         .delete(`/api/disagree/${this.data.slug}`)
         .then((res) => {
           console.log("deletedDisagree");
+          this.lengthd--;
         })
         .catch((error) => console.log(error.response.data));
     },
@@ -210,6 +234,7 @@ export default {
         .delete(`/api/agree/${this.data.slug}`)
         .then((res) => {
           console.log("deletedagree");
+          this.lengtha--;
         })
         .catch((error) => console.log(error.response.data));
     },

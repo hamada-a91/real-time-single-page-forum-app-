@@ -33,7 +33,7 @@ export default {
         .then((res) => {
           EventBus.$emit("newReply", res.data.reply);
           this.body = "";
-          window.scrollTo(0, 0);
+          window.scrollTo(500, 500);
         });
     },
   },

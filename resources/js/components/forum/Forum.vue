@@ -1,18 +1,20 @@
 <template>
   <v-container fluid grid-list-md>
-    <v-layout row wrap>
-      <v-flex xs8>
-        <question
-          v-for="question in questions"
-          :key="question.id"
-          :data="question"
-          >></question
-        ></v-flex
-      >
-      <v-flex xs4>
-        <app-sidebar> </app-sidebar>
-      </v-flex>
-    </v-layout>
+    <v-parallax :src="require('../images/123.jpg')" height="800">
+      <v-layout row wrap>
+        <v-flex xs8>
+          <question
+            v-for="question in questions"
+            :key="question.id"
+            :data="question"
+            >></question
+          ></v-flex
+        >
+        <v-flex xs4>
+          <app-sidebar> </app-sidebar>
+        </v-flex>
+      </v-layout>
+    </v-parallax>
   </v-container>
 </template>
 

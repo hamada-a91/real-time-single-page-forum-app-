@@ -1,22 +1,24 @@
 <template>
-  <div v-if="question">
-    <edit :data="question" v-if="editing"></edit>
-    <v-card
-      class="d-flex justify-end mb-2 align-self-center align-center mx-auto"
-      max-width="50%"
-      v-else
-    >
-      <v-col align-self="center">
-        <show-question :data="question" v-if="question"></show-question>
-        <new-reply :questionSlug="question.slug"></new-reply>
-      </v-col>
-    </v-card>
-    <v-container class="">
-      <div max-width="70%" class="mx-auto">
-        <replies :question="question" :slugq="question.slug"></replies>
-      </div>
-    </v-container>
-  </div>
+  <v-parallax :src="require('../images/1233.jpg')" height="auto">
+    <div v-if="question">
+      <edit :data="question" v-if="editing"></edit>
+      <v-card
+        class="d-flex justify-end mb-2 align-self-center align-center mx-auto"
+        max-width="50%"
+        v-else
+      >
+        <v-col align-self="center">
+          <show-question :data="question" v-if="question"></show-question>
+          <new-reply :questionSlug="question.slug"></new-reply>
+        </v-col>
+      </v-card>
+      <v-container class="">
+        <div max-width="70%" class="mx-auto">
+          <replies :question="question" :slugq="question.slug"></replies>
+        </div>
+      </v-container>
+    </div>
+  </v-parallax>
 </template>
 <script>
 import ShowQuestion from "./ShowQuestion";

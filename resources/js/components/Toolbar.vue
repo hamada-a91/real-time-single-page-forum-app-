@@ -5,9 +5,8 @@
       dark
       prominent
       src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+      height="80"
     >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
       <v-toolbar-title>AskTime</v-toolbar-title>
 
       <v-spacer></v-spacer>

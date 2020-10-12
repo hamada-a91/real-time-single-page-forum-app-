@@ -44,14 +44,18 @@ export default {
   },
   methods: {
     getNotification() {
-      axios.post("/api/notifications").then((res) => {
-        console.log(res);
-        this.read = res.data.read;
-        this.unread = res.data.unread;
-        if (this.unreadCount) {
+      axios
+        .post("/api/notifications")
+        .then((res) => {
+          console.log(res);
+          this.read = res.data.read;
+          this.unread = res.data.unread;
           this.unreadCount = res.data.unread.length;
-        }
-      });
+        })
+        .catch((error) => {
+          Exception.handle(error);
+          console.log(error);
+        });
     },
     readnotification(notification) {
       axios.post("/api/markAsRead", { id: notification.id }).then((res) => {

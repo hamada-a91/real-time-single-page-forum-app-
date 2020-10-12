@@ -1,6 +1,6 @@
 <template>
   <v-card class="mt-2">
-    <v-toolbar color="cyan" dark>
+    <v-toolbar color="blue" dark>
       <v-toolbar-title>Categories</v-toolbar-title>
     </v-toolbar>
     <v-list>

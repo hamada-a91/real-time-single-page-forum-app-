@@ -1,12 +1,16 @@
 <template>
   <v-container>
     <v-form @submit.prevent="create">
+      <span class="red--text" v-if="errors.title"> {{ errors.title[0] }}</span>
       <v-text-field
         label="Title"
         v-model="form.title"
         type="text"
         required
       ></v-text-field>
+      <span class="red--text" v-if="errors.category_id">
+        {{ errors.category_id[0] }}</span
+      >
 
       <v-select
         :items="categories"
@@ -18,7 +22,8 @@
       ></v-select>
       <div>
         <h4>Discribe</h4>
-        <vue-simplemde v-model="form.body"></vue-simplemde>
+        <span class="red--text" v-if="errors.body"> {{ errors.body[0] }}</span>
+        <v-textarea filled v-model="form.body" name="input-7-4"></v-textarea>
       </div>
       <v-row>
         <v-menu
@@ -120,7 +125,7 @@ export default {
           this.$router.push(res.data.path);
           console.log(res);
         })
-        .catch((error) => (this.errors = error.response.data.error));
+        .catch((error) => (this.errors = error.response.data.errors));
     },
   },
 };

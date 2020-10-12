@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AgreeEvent;
 use App\Models\agree;
 use App\Models\Question;
 use Illuminate\Http\Request;
@@ -22,6 +23,8 @@ class AgreeController extends Controller
         $agree = $question->agrees()->create([
             'user_id' => auth()->id()
         ]);
+        broadcast(new AgreeEvent($question->id, 1))->toOthers();
+
         return response(['agree' => new AgreeResource($agree)], Response::HTTP_CREATED);
     }
 
@@ -34,5 +37,6 @@ class AgreeController extends Controller
     {
         ///$reply->like()->where('user_id', '3')->first()->delete();
         $question->agrees()->where('user_id', auth()->id())->first()->delete();
+        broadcast(new AgreeEvent($question->id, 0))->toOthers();
     }
 }
