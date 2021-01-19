@@ -17,8 +17,10 @@ class AgreeResource extends JsonResource
         //  dd($this);
         return [
             'id' => $this->id,
-            'user' => $this->user->name,
-            'user_id' => auth()->id()
+            'user_id' => auth()->id(),
+            'agreeName' => $this->agreeName,
+            'suggestemnt_id' => $this->suggestment_id,
+
 
 
         ];

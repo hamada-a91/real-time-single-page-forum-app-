@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Suggestment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Disagree extends Model
 {
@@ -13,6 +14,10 @@ class Disagree extends Model
     public function question()
     {
         return $this->belongsTo(Question::class);
+    }
+    public function suggestment()
+    {
+        return $this->belongsTo(Suggestment::class);
     }
     public function user()
     {

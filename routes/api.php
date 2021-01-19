@@ -35,6 +35,8 @@ Route::group([
 Route::apiResource("/question", "App\Http\Controllers\QuestionController");
 Route::apiResource("/category", "App\Http\Controllers\CategoryController");
 Route::apiResource("/question/{question}/reply", "App\Http\Controllers\ReplyController");
+Route::apiResource("/question/{question}/suggestment", "App\Http\Controllers\SuggestmentController");
+
 
 Route::Post("/like/{reply}", "App\Http\Controllers\LikeController@likeit");
 Route::delete("/like/{reply}", "App\Http\Controllers\LikeController@unlikeit");
@@ -43,10 +45,15 @@ Route::Post("/agree/{question}", "App\Http\Controllers\AgreeController@agree");
 Route::delete("/agree/{question}", "App\Http\Controllers\AgreeController@unagree");
 Route::get("/question/{question}/agree", "App\Http\Controllers\AgreeController@index");
 
+Route::Post("/agree/{suggestment_id}", "App\Http\Controllers\AgreeController@agree");
+Route::delete("/agree/{agreeName}", "App\Http\Controllers\AgreeController@unagree");
+Route::get("/suggestment/{suggestment}/agree", "App\Http\Controllers\agreeController@index");
 
-Route::Post("/disagree/{question}", "App\Http\Controllers\DisagreeController@disagree");
-Route::delete("/disagree/{question}", "App\Http\Controllers\DisagreeController@undisagree");
-Route::get("/question/{question}/disagree", "App\Http\Controllers\DisagreeController@index");
+
+
+Route::Post("/disagree/{suggestment_id}", "App\Http\Controllers\DisagreeController@disagree");
+Route::delete("/disagree/{disagreeName}", "App\Http\Controllers\DisagreeController@undisagree");
+Route::get("/suggestment/{suggestment}/disagree", "App\Http\Controllers\DisagreeController@index");
 
 //Notificationsrout
 

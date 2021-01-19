@@ -15,8 +15,9 @@ class CreateAgreesTable extends Migration
     {
         Schema::create('agrees', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('question_id');
             $table->integer('user_id');
+            $table->integer('suggestment_id')->unsigned();
+            $table->foreign('suggestment_id')->references('id')->on('suggestments')->onDelete('cascade');
             $table->timestamps();
         });
     }

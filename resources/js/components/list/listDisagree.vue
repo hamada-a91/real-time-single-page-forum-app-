@@ -1,14 +1,11 @@
 <template >
-  <v-card
-    class="mx-auto"
-    rounded="2"
-    max-width="57%"
-    max-height="40"
-    color="error"
-  >
-    <v-card-text>
-      <div class="mt-n2">{{ data.user }} : Disagreed it</div>
-    </v-card-text>
+  <v-card class="mx-auto" height="40" rounded="2" color="#FFCCBC">
+    <v-row>
+      <div class="mt-4 mx-auto">
+        {{ data.disagreeName }}
+        <v-icon>clear</v-icon>
+      </div>
+    </v-row>
   </v-card>
 </template>
 

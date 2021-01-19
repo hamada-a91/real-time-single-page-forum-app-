@@ -21,9 +21,10 @@
 <script>
 import question from "./question";
 import AppSidebar from "./AppSidebar";
+import Calender from "./Calender";
 
 export default {
-  components: { question, AppSidebar },
+  components: { question, AppSidebar, Calender },
   data() {
     return {
       questions: {},

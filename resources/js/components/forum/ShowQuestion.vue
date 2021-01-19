@@ -12,74 +12,38 @@
       <v-spacer></v-spacer>
       <v-btn class="mb-14" text color="pink">{{ replyCount }} Reply</v-btn>
     </v-card-title>
-    <v-card-text aria-setsize="15">
-      <v-textarea
-        filled
-        name="input-7-4"
-        :value="data.body"
-        disabled
-      ></v-textarea
-    ></v-card-text>
-    <v-row class="ml-4">
-      <v-chip class="ma-2" color="cyan" label text-color="white">
-        <v-icon left> mdi-calendar </v-icon>
-        {{ data.askdate }}
-      </v-chip>
-      <v-chip class="ma-2" color="pink" label text-color="white">
-        <v-icon left> mdi-clock </v-icon>
-        {{ data.asktime }}
-      </v-chip>
-      <v-spacer></v-spacer>
-      <v-col class="mt-n7">
-        <h3>Please choise</h3>
-        <v-row>
-          <v-btn
-            max-width="90px"
-            :loading="loading2"
-            :disabled="disable"
-            color="success"
-            @click="agreeIt"
-          >
-            Agree
+
+    <v-card
+      class="mb-4 d-flex align-start justify-start pa-4 ml-4 mr-4"
+      max-width="full"
+      min-height="76"
+      outlined
+      color="#E3F2FD"
+    >
+      <div class=".text-lg-h6">{{ data.body }}</div>
+    </v-card>
+    <suggestments :questionSlug="data.slug"></suggestments>
+    <agrees :questionSlug="data.slug"></agrees>
+
+    <v-row>
+      <div class="mx-1 ml-4 d-flex align-center">
+        <v-text-field
+          label="Name"
+          v-model="nameSuggestmentOwner"
+          class="shrink"
+        ></v-text-field>
+        <div class="mt-n6 ml-3">
+          <v-btn max-width="90px" color="primary" @click="addition">
+            Addition
           </v-btn>
-          <v-btn
-            max-width="90px"
-            :loading="loading2"
-            :disabled="disableD"
-            color="error"
-            @click="disagreeIt"
-          >
-            Disagree
-          </v-btn>
-        </v-row>
-      </v-col>
+        </div>
+      </div>
     </v-row>
+    <v-divider></v-divider>
+
+    <lists :questionSlug="data.slug"></lists>
 
     <v-divider></v-divider>
-    <div>
-      <listAgree
-        v-for="(agree, index) in agrees"
-        :key="agree.id"
-        :data="agree"
-        :index="index"
-      ></listAgree>
-      <listDisagree
-        v-for="(disagree, index) in disagrees"
-        :key="disagree.id"
-        :data="disagree"
-        :index="index"
-      ></listDisagree>
-      <v-row class="mx-auto my-auto justify-center">
-        <v-chip class="ma-2" color="success" outlined>
-          <v-icon left> thumb_up </v-icon>
-          {{ lengtha }} Agrees
-        </v-chip>
-        <v-chip class="ma-2" color="error" outlined>
-          <v-icon left> thumb_down </v-icon>
-          {{ lengthd }} Disagrees
-        </v-chip>
-      </v-row>
-    </div>
 
     <v-divider></v-divider>
 
@@ -103,9 +67,13 @@
 <script>
 import listAgree from "../list/listAgree";
 import listDisagree from "../list/listDisagree";
+import lists from "../list/lists";
+
+import Suggestments from "./suggestment/Suggestments";
+import Agrees from "./agree/Agrees";
 
 export default {
-  components: { listAgree, listDisagree },
+  components: { listAgree, lists, listDisagree, Agrees, Suggestments },
   data() {
     return {
       own: User.own(this.data.user_id),
@@ -118,6 +86,7 @@ export default {
       replyCount: this.data.reply_count,
       lengtha: null,
       lengthd: null,
+      nameSuggestmentOwner: "",
     };
   },
   created() {
@@ -154,6 +123,9 @@ export default {
     unshift() {},
   },
   methods: {
+    addition() {
+      EventBus.$emit("addition", this.nameSuggestmentOwner);
+    },
     destroy() {
       axios
         .delete(`/api/question/${this.data.slug}`)

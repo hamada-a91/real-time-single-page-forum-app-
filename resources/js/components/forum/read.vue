@@ -4,7 +4,7 @@
       <edit :data="question" v-if="editing"></edit>
       <v-card
         class="d-flex justify-end mb-2 align-self-center align-center mx-auto"
-        max-width="50%"
+        max-width="70%"
         v-else
       >
         <v-col align-self="center">
@@ -16,6 +16,7 @@
         <div max-width="70%" class="mx-auto">
           <replies :question="question" :slugq="question.slug"></replies>
         </div>
+        <div></div>
       </v-container>
     </div>
   </v-parallax>

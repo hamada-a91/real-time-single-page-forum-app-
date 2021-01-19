@@ -20,6 +20,7 @@ class QuestionResource extends JsonResource
             'body' => $this->body,
             'created_at' => $this->created_at->diffForHumans(),
             'replies' => ReplyResource::collection($this->replies),
+            'suggestments' => SuggestmentResource::collection($this->suggestments),
             'reply_count' => $this->replies->count(),
             'user' => $this->user->name,
             'id' => $this->id,
@@ -27,8 +28,6 @@ class QuestionResource extends JsonResource
             'slug' => $this->slug,
             'askdate' => $this->askdate,
             'asktime' => $this->asktime,
-            'agreed' => $this->agrees->where('user_id', auth()->id())->count(),
-            'disagreed' => $this->disagrees->where('user_id', auth()->id())->count(),
 
 
 

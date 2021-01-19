@@ -16,8 +16,9 @@ class DisAgreeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => $this->user->name,
-            'user_id' => auth()->id()
+            'user_id' => auth()->id(),
+            'disagreeName' => $this->disagreeName,
+            'suggestemnt_id' => $this->suggestment_id,
         ];
     }
 }

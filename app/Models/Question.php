@@ -7,7 +7,11 @@ use App\Models\Agree;
 use App\Models\Reply;
 use App\Models\Category;
 use App\Models\Disagree;
+use App\Models\Suggestment;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Question extends Model
@@ -20,12 +24,15 @@ class Question extends Model
 
 
 
+
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($question) {
             $question->slug = str_slug($question->title);
+            // $question->slug = Hash::make('slug');
+            // $question->slug = bcrypt('slug');
         });
     }
 
@@ -38,20 +45,18 @@ class Question extends Model
     {
         return $this->hasMany(Reply::class)->latest();
     }
-    public function agrees()
+    public function suggestments()
     {
-        return $this->hasMany(Agree::class);
+        return $this->hasMany(Suggestment::class)->latest();
     }
-    public function disagrees()
-    {
-        return $this->hasMany(Disagree::class);
-    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
     public function getPathAttribute()
     {
+
         return "/question/$this->slug";
     }
     public function getRouteKeyName()

@@ -23,12 +23,11 @@ class QuestionRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
             'title'      => 'required',
             'body'       => 'required',
             'category_id' => 'required',
-            'asktime' => 'required',
+            'asktime'     => 'required',
             'askdate' => 'required'
 
         ];
